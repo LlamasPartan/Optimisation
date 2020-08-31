@@ -63,12 +63,7 @@ def simplexeStandard(tab):
 
 def simplexePhases(tab,x):
     #Construction du tableau du problème auxiliaire
-    tabDelta=tab.copy()
-    tabDelta[0,:]*=0
-    tabGauche=tabDelta[:,:-1]
-    tabMilieu=-np.ones((tabDelta.shape[0],1))
-    tabDroite=tabDelta[:,-1:]
-    tabDelta=np.concatenate((tabGauche,tabMilieu,tabDroite),axis=1)
+    tabDelta=auxiliaire(tab)
     #Première phase
     tabDelta,x=phase1(tabDelta,x)
     #On regarde si on peut passer à la seconde phase
@@ -79,6 +74,15 @@ def simplexePhases(tab,x):
     tabDelta,x=phase2(tabDelta,x,tab)
     #Retour à la méthode standard
     return(tabDelta,x)
+
+def auxiliaire(tab):
+    tabDelta=tab.copy()
+    tabDelta[0,:]*=0
+    tabGauche=tabDelta[:,:-1]
+    tabMilieu=-np.ones((tabDelta.shape[0],1))
+    tabDroite=tabDelta[:,-1:]
+    tabDelta=np.concatenate((tabGauche,tabMilieu,tabDroite),axis=1)
+    return(tabDelta)
 
 def phase1(tabDelta,x):
     #Choix de la variable entrante (delta)
@@ -137,4 +141,3 @@ for i in range(x.size):
     else:
         print("y",x[i]+1-tab.shape[1]+tab.shape[0],"=",np.around(tab[i+1,-1],3))
 print("Optimum de",-np.around(tab[0,-1],3))
-
