@@ -73,12 +73,7 @@ endfunction
 
 function [tabDelta,x]=simplexePhases(tab,x)
     %Construction du tableau du problème auxiliaire
-    tabDelta=tab
-    tabDelta(1,:)*=0
-    tabGauche=tabDelta(:,1:end-1)
-    tabMilieu=-ones(size(tabDelta)(1),1)
-    tabDroite=tabDelta(:,end)
-    tabDelta=[tabGauche,tabMilieu,tabDroite]
+    tabDelta=auxiliaire(tab)
     %Première phase
     [tabDelta,x]=phase1(tabDelta,x)
     %On regarde si on peut passer à la seconde phase
@@ -88,6 +83,15 @@ function [tabDelta,x]=simplexePhases(tab,x)
     endif
     %Seconde phase
     [tabDelta,x]=phase2(tabDelta,x,tab)
+endfunction
+
+function tabDelta=auxiliaire(tab)
+    tabDelta=tab
+    tabDelta(1,:)*=0
+    tabGauche=tabDelta(:,1:end-1)
+    tabMilieu=-ones(size(tabDelta)(1),1)
+    tabDroite=tabDelta(:,end)
+    tabDelta=[tabGauche,tabMilieu,tabDroite]
 endfunction
 
 function [tabDelta,x]=phase1(tabDelta,x)
