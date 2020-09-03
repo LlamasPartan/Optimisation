@@ -16,7 +16,6 @@ function indiceVarEntrante=variableEntrante(tab)
     for i=2:size(tab)(2)-1
         if tab(1,i)>tab(1,indiceVarEntrante)
             indiceVarEntrante=i
-            disp("a")
         endif
     endfor
 endfunction
